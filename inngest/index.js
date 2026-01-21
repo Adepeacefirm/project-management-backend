@@ -176,7 +176,7 @@ const sendTaskAssignmentEmail = inngest.createFunction(
                 <p style="margin: 6px 0;"><strong>Due Date:</strong> ${new Date(task.due_date).toLocaleDateString()}</p>
             </div>
 
-            <a href="${origin}" style="background-colour: #007bff; padding: 12px 24px; border-radius: 5px; color: #fff; font-weight: 600; font-size: 16px; text-decoration: none;">
+            <a href="${origin}" style="background-color: #007bff; padding: 12px 24px; border-radius: 5px; color: #fff; font-weight: 600; font-size: 16px; text-decoration: none;">
                 View Task
             </a>
 

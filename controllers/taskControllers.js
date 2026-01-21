@@ -80,7 +80,7 @@ const createTask = async (req, res) => {
 
 const updateTask = async (req, res) => {
   try {
-    const task = await prisma.task.findUnique({ where: { id: req.params } });
+    const task = await prisma.task.findUnique({ where: { id: req.params.id } });
     if (!task) {
       return res.status(404).json({ sucess: false, message: "Task not found" });
     }
