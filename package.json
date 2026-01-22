@@ -8,20 +8,21 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "npx prisma generate",
+    "postinstall": "prisma generate",
     "start": "prisma generate && node server.js",
     "dev": "node --watch server.js"
   },
   "dependencies": {
     "@clerk/express": "^1.7.63",
     "@neondatabase/serverless": "^1.0.2",
-    "@prisma/adapter-neon": "^7.2.0",
-    "@prisma/client": "^7.2.0",
+    "@prisma/adapter-neon": "^7.3.0",
+    "@prisma/client": "^7.3.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "inngest": "^3.49.3",
     "nodemailer": "^7.0.12",
+    "prisma": "^7.3.0",
     "ws": "^8.19.0"
   }
 }
