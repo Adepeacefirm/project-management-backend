@@ -98,7 +98,7 @@ const updateTask = async (req, res) => {
     } else if (project.team_lead !== userId) {
       return res
         .status(403)
-        .json({ sucess: false, message: "Only an admin can do this" });
+        .json({ sucess: false, message: "Only a project admin can update task" });
     }
 
     const updatedTask = await prisma.task.update({
@@ -143,7 +143,7 @@ const deletTask = async (req, res) => {
     } else if (project.team_lead !== userId) {
       return res
         .status(403)
-        .json({ sucess: false, message: "Only an admin can do this" });
+        .json({ sucess: false, message: "Only a project admin can delete task" });
     }
 
     await prisma.task.deleteMany({ where: { id: { in: taskIds } } });
