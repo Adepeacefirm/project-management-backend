@@ -27,18 +27,18 @@ const createTask = async (req, res) => {
     if (!project) {
       return res
         .status(404)
-        .json({ sucess: false, message: "Project not found" });
+        .json({ success: false, message: "Project not found" });
     } else if (project.team_lead !== userId) {
       return res
         .status(403)
-        .json({ sucess: false, message: "Only an admin can do this" });
+        .json({ success: false, message: "Only an admin can do this" });
     } else if (
       assigneeId &&
       !project.members.find((member) => member.user.id === assigneeId)
     ) {
       return res
         .status(403)
-        .json({ sucess: false, message: "Assignee is not a member" });
+        .json({ success: false, message: "Assignee is not a member" });
     }
 
     const task = await prisma.task.create({
@@ -68,13 +68,13 @@ const createTask = async (req, res) => {
     });
 
     res.status(200).json({
-      sucess: true,
+      success: true,
       message: "Task created successfully",
       task: taskWithAssignee,
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ sucess: false, message: "Server error" });
+    res.status(500).json({ success: false, message: "Server error" });
   }
 };
 
@@ -82,7 +82,9 @@ const updateTask = async (req, res) => {
   try {
     const task = await prisma.task.findUnique({ where: { id: req.params.id } });
     if (!task) {
-      return res.status(404).json({ sucess: false, message: "Task not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Task not found" });
     }
     const { userId } = await req.auth();
 
@@ -94,11 +96,14 @@ const updateTask = async (req, res) => {
     if (!project) {
       return res
         .status(404)
-        .json({ sucess: false, message: "Project not found" });
+        .json({ success: false, message: "Project not found" });
     } else if (project.team_lead !== userId) {
       return res
         .status(403)
-        .json({ sucess: false, message: "Only a project admin can update task" });
+        .json({
+          success: false,
+          message: "Only a project admin can update task",
+        });
     }
 
     const updatedTask = await prisma.task.update({
@@ -107,13 +112,13 @@ const updateTask = async (req, res) => {
     });
 
     res.status(200).json({
-      sucess: true,
+      success: true,
       message: "Task updated successfully",
       task: updatedTask,
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ sucess: false, message: "Server error" });
+    res.status(500).json({ success: false, message: "Server error" });
   }
 };
 
@@ -128,7 +133,7 @@ const deletTask = async (req, res) => {
     if (tasks.length === 0) {
       return res
         .status(404)
-        .json({ sucess: false, message: "Tasks not found" });
+        .json({ success: false, message: "Tasks not found" });
     }
 
     const project = await prisma.project.findUnique({
@@ -139,22 +144,25 @@ const deletTask = async (req, res) => {
     if (!project) {
       return res
         .status(404)
-        .json({ sucess: false, message: "Project not found" });
+        .json({ success: false, message: "Project not found" });
     } else if (project.team_lead !== userId) {
       return res
         .status(403)
-        .json({ sucess: false, message: "Only a project admin can delete task" });
+        .json({
+          success: false,
+          message: "Only a project admin can delete task",
+        });
     }
 
     await prisma.task.deleteMany({ where: { id: { in: taskIds } } });
 
     res.status(200).json({
-      sucess: true,
+      success: true,
       message: "Task deleted successfully",
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ sucess: false, message: "Server error" });
+    res.status(500).json({ success: false, message: "Server error" });
   }
 };
 
